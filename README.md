@@ -34,12 +34,16 @@
 - connect with 'mysqli_query'
 - use if loop check if there are result of the query:
 ```php
+<?php
     $result = mysqli_query($con, $query);
     if(mysqli_num_rows($result))>0)
+?>
 ``` 
 - use while loop to check entire ip address of the query result:    
 ```php
+<?php
     while($row = mysqli_fetch_array($result))
+?>
 ```
 
 ## Step3: 
@@ -51,6 +55,29 @@ https://geoip-db.com/json/ +ipaddress
 <br>
 
 ![Screenshot](image/Readme1.jpg)
+- $ip is containing $row['ip'] address which is ip address in the database.
+- $url is https://geoip-db.com/json/ + ip address.
+- $file will get as a json file.
+- $arr will decode json file and turn it into array. 
+```php
+<?php
+    $ip = $row['ip'];
+	$url = 'https://geoip-db.com/json/'.$ip;
+	$file = file_get_contents($url);
+	$arr = json_decode($file, true);
+?>
+```
+
+## Step4 (success): 
+*if $arr is true insert into mySQL ip-table*
+- create a String builder as 
+"UPDATE IP-TABLE SET" 
+- if country, contry code, city, state, latitude, and longitude is 'Not found', it should change to null. 
+- update to mysql 
+
+## Step5:
+- close mysql connection
+
 
 
 
